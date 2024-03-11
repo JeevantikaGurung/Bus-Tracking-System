@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft ="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom ="16dp"
+    android:background="#FFFFFF" 
+    tools:context=".regpresent">
+
+<ImageView
+    android:id="@+id/imageViewTop"
+    android:layout_width="350dp" a
+    android:layout_height="200dp"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="20dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/flat_bus_with_building_41577_54" />
+
+<TextView
+    android:id="@+id/registrationNumberTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/imageViewTop"
+    android:layout_marginTop="30dp"
+    android:text="Entered Student: "
+    android:scaleType="centerCrop"
+    android:layout centerHorizontal="true"
+    android:textColor="@color/black" />
+
+<TextView
+    android:id="@+id/presentStatusTextView"
+    android:layout_width="wrap content"
+    android:layout height="wrap content"
+    android:layout_below="@id/registrationNumberTextView"
+    android:layout_marginTop="16dp"
+    android:textColor="@color/black"    
+    android:scaleType="centerCrop"
+    android:layout_centerHorizontal="true"
+    android:text="Present in the bus: " />
+
+<TextView
+    android:id="@+id/presentStatusTextView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/presentStatusTextView"
+    android:layout_marginTop="16dp"
+    android:textColor="@color/black" 
+    android:scaleType="centerCrop"
+    android:layout_centerHorizontal="true"
+    android:text="20BCE7021" />
+
+<TextView
+    android:id="@+id/presentStatusTextView2" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout below="@id/presentStatusTextView1"
+    android:layout_marginTop="16dp" 
+    android:textColor="@color/black"
+    android:scaleType="centerCrop"
+    android:layout_centerHorizontal="true"
+    android:text="20BCR7001" />
+
+<TextView
+    android:id="@+id/presentStateTextView3"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:layout_below="@id/presentStatusTextView2"
+    android:layout marginTop="16dp"
+    android:textColor="@color/black"
+    android:scaleType="centerCrop"
+    android:layout_centerHorizontal="true"
+    android:text="20BCR7052" />
+
+<TextView
+    android:id="@+id/presentStatusTextView4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:layout_below="@id/presentStatusTextView3"
+    android:layout_marginTop="16dp"
+    android:textColor="@color/black" 
+    android:scaleType="centerCrop"
+    android:layout_centerHorizontal="true"
+    android:text="20BCE7072" />
+  <TextView
+    android:id="@+id/presentStatusTextView5"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"
+    android:layout_below="@id/presentStatusTextView4"
+    android:layout_marginTop="16dp"
+    android:textColor="@color/black"
+    android:scaleType="centerCrop"
+    android:layout centerHorizontal="true"
+    android:text="20BCE7055" />
+
+<TextView
+    android:id="@+id/presentStatusTextView6" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/presentStatusTextView5"
+    android:layout_marginTop="16dp"
+    android:textColor="@color/black"
+    android:scaleType="centerCrop"
+    android:layout_centerHorizontal="true"
+    android:text="20BCE7099" />
+
+</RelativeLayout>

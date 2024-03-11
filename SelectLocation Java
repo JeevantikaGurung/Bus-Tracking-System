@@ -1,0 +1,57 @@
+package com.example.vbustrack;
+import androidx.appcompat.app.AppCompatActivity:
+import androidx.core.content.ContextCompat
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color:
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+      @SuppressLint("MissingInflatedId")
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState); 
+          setContentView(R.layout.activity_main);
+
+getWindow().setStatusBarColor (ContextCompat.getColor(MainActivity.this.R.colo black));
+
+      if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+
+  getWindow().getDecorView().setSystemUiVisibility (View.SYSTEM_UI_FLAG_LIGHT_STATUS BAR);
+          getWindow().setStatusBarColor(Color.WHITE);
+}
+
+      Button vijayawada;
+      vijayawada = findViewById(R.id.vijayavada);
+      vijayawada.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+                  Intent intent = new Intent(MainActivity.this,vijayawadaroutenumber.class);
+                  startActivity(intent);
+          }
+      });
+
+        Button guntur;
+        guntur findViewById(R.id.guntur);
+        guntur.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this,sunturzoutenumber.class);
+                    startActivity(intent);
+          }
+});
+
+        Button tenali;
+        tenali findViewById(R.id.tenali);
+        tenali.setOnClickListener(new View.OnClickListener() { 
+            @Override
+            public void onClick(View v) {
+                  Intent intent = new Intent(MainActivity.this,tenaliroutenumber.class);
+                  startActivity(intent);}
+        });
+    }
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androids.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context="Lenalikoutroumber">
+
+<Spinner
+      android:id="@+id/spinner2"
+      android:layout_width="303dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="150dp"
+      android:background="#24204D"
+      android:entries="@array/vijayawada_route_3"
+      android:minHeight="48dp"
+      android:popupBackground="#24204D"
+      android:textColor="@android:color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+<Spinner
+      android:id="@+id/spinner" 
+      android:layout_width="303dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="100dp"
+      android:background="#24204D"
+      android:entries="@array/vijayawada_route_2"
+      android:minHeight="48dp"
+      android:popupBackground="#24204D"
+      android:textColor="@android:color/white"
+      app:layout_constraintBottom_toTopOf="@+id/spinner2" 
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintstart_tostartOf="parent" />
+
+<Spinner
+      android:id="@+id/spinner"
+      android:layout_width="303dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="100dp"
+      android:background="#24204D"
+      androidtentries="@array/vijayawada_route_1"
+      android:minHeight="48dp"
+      android:popupBackground="#24204D"
+      android:textColor="@android:color/white"
+      app:layout_constraintBottom_toTopOf="@+id/spinner1"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal bias="0.498"
+      app:layout_constraintStart_toStartOf="parent" />
+
+<ImageView
+      android:id="@+id/imageView2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="26dp"
+      android:textColor="@color/black"
+      app:layout_constraintEnd_toEndOf="parent" 
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/_25517163954_1" />
+
+<TextView
+      android:id="@+id/textView2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"  
+      android:layout_marginTop="172dp"
+      android:text="Select the route number for buses from Tenali"
+      android:textColor="@color/black"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent" 
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

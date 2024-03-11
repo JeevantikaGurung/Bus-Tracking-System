@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match parent"
+  android:layout_height="match_parent"
+  android:background="#FFFFFF"
+  android:padding="16dp">
+
+<TextView
+    android:id="@+id/textViewAboveImage"
+    android:layout_width ="wrap_content"
+    android:layout_height="wrap_content" 
+    android:layout_alignParentTop="true"
+    android:layout centerHorizontal="true"
+    android:layout_marginTop="50dp"
+    android:text="Sign In"
+    android:textColor="@color/black"
+    android:textSize="34dp"
+    android:textStyle="italic" />
+
+<!-- Add ImageView below the TextView -->
+<ImageView
+  android:id="@+id/imageViewTop"
+  android:layout_width="350dp" 
+  android:layout_height="200dp"
+  android:layout_below="@id/textViewAboveImage"
+  android:layout centerHorizontal="true"
+  android:layout_marginTop="30dp" 
+  android:scaleType="centerCrop"
+  android:src="@drawable/flat_bus_with_building_41577_54" />
+
+<EditText
+    android:id="@+id/editTextEmailSignIn" 
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_below="@id/imageViewTop"
+  android:layout centerHorizontal="true"
+  android:layout_marginTop="50dp"
+  android:layout_marginBottom ="8dp"
+  android:hint="Email"
+  android:inputType="textEmailAddress"
+  android:textColor="@color/black" />
+
+<Button
+  android:id="@+id/buttonSignIn"
+  android:layout_width="374dp"
+  android:layout_height="50dp"
+  android:layout_below="@id/editTextPasswordSignIn"
+  android:layout_marginTop="200" 
+  android:backgroundTint="#EE2E31"
+  android:text="Sign In" />
+
+<EditText
+  android:id="@+id/editTextPasswordSignIn"
+  android:layout_width="match parent"
+  android:layout_height="50dp"
+  android:layout_below="@id/editTextEmailSignIn"
+  android:layout_marginTop="20dp"
+  android:layout_marginBottom="16dp"
+  android:hint="Password"
+  android:inputType="textPassword"
+  android:textColor="@color/black" />
+
+<TextView
+  android:id="@+id/textViewSignUpPrompt"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_below="@id/buttonSignIn" 
+  android:layout_centerHorizontal="true"
+  android:layout_marginTop="16dp"
+  android:text="Don't have an account? Click here to Sign Up." 
+  android:textColor="@color/black" />
+
+</RelativeLayout>
+
+
+    

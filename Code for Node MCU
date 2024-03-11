@@ -1,0 +1,237 @@
+#include <Arduino.h>
+#if defined(ESP32)
+  #include <WiFi.h>
+#elif defined(ESP8266)
+  #include <ESP8266WiFi.h>
+#endif
+#include <Firebase ESP_Client.h>
+
+#include <TinyGPS++.h> //https://github.com/mikalhart/TinyGPSPlus
+#include <SoftwareSerial.h>
+
+#include <SPI.h>
+#include <MFRC522.h>
+
+//Provide the token generation process info.
+#include "addons/TokenHelper.h"
+
+//Provide the RTDB payload printing info and other helper functions.
+#include "addons/RTDBHelper.h"
+
+// Insert your network credentials
+#define WIFI_SSID "ABC"
+#define WIFI PASSWORD "123456789" I
+
+// Insert Firebase project API Key
+#define API_KEY "AIzaSyBtvq3TkTbatxpRliw3Ib-xboNwO5Wf5oI"
+
+// Insert RTDB URLefine the RTDB URL */
+#define DATABASE_URL "fix-3£169-default-rtdb.asia-
+southeastl.firebasedatabase.app/"
+
+//Define Firebase Data object
+FirebaseData fbdo;
+
+FirebaseAuth auth; 
+FirebaseConfig config;
+
+unsigned long sendDataPrevMillis = 0;
+int count = 0;
+
+bool signupOK = false;
+
+constexpr uint8_t RST_PIN = D3; 
+constexpr uint8_t SS_PIN = D4;
+
+//GPS Module RX pin to NodeMCU D1
+//GPS Module TX pin to NodeMCU D2
+
+SoftwareSerial serial_gps(4, 5); 
+TinyGPSPlus gps;
+
+MFRC522 mfrc522(SS_PIN, RST_PIN); 
+MFRC522::MIFARE_Key key;
+
+int blockNum = 1 ;
+char myString [16] = "test";
+///byte blockData [16] ={"123456789"};
+
+byte bufferLen = 18;
+byte readBlockData[18];
+MFRC522::StatusCode status;
+
+char A[16];
+
+void setup() { 
+Serial.begin(9600); 
+serial_gps.begin(9600);
+
+WiFi.begin(WIFI_SSID, WIFI_PASSWORD); 
+Serial.print("Connecting to Wi-Fi"); 
+while (WiFi.status() != WL_CONNECTED) { 
+Serial.print("."); 
+delay(300);
+}
+
+Serial.println(); 
+Serial.print("Connected with IP: "); 
+Serial.println(WiFi.localIP()); 
+Serial.println();
+
+//Initialize serial communications with PC
+// Serial.begin(115200);
+//Initializee SPI bus
+
+SPI.begin();
+
+//Initialize MFRC522 Module 
+mfrc522.PCD_Init();
+  Serial.println("  ");
+
+Serial.println("Scan the card");
+
+/* Assign the api key (required) */ 
+config.api_key=API_KEY;
+
+/* Assign the RTDB URL (required) */ 
+config.database_url = DATABASE_URL;
+
+/* Sign up */ 
+if (Firebase.signUp(&config, &auth, "", "")){
+Serial.println("ok"); 
+signupOK = true;
+}
+else{
+  Serial.printf("%s\n", config.signer.signupError.message.c_str());
+}
+
+/* Assign the callback function for the long running token generation task */
+config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
+
+Firebase.begin(&config, &auth);
+Firebase.reconnectWiFi(true);
+}
+
+void loop() {
+while(1){
+
+/* Look for new cards */
+/* Reset the loop if no new card is present on RC522 Reader */
+
+if ( ! mfrc522.PICC_IsNewCardPresent()){return;}
+
+/* Select one of the cards */
+if ( ! mfxc522.PICC ReadCardSerial()) {return;}
+
+for (byte i = 0; i < 6; i++) {
+        key,keyByte[i] = 0xFF;
+}
+
+
+Serial.print("\n");
+Serial.println("*Card Detected*");
+
+/* Print UID of the Card */
+Serial.print(F("Card UID:"));
+
+for (byte i = 0; i < mfrc522.uid.size; i++){ 
+Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? "0" : " "); 
+Serial.print(mfrc522.uid.uidByte[i], HEX);
+} 
+Serial.print("\n");
+/* Print type of card (for example, MIFARE 1K) */ 
+Serial.print(F("PICC type: "));
+MFRC522::PICC_Type piccType = mfrc522.PICC_GetType(mfrc522.uid.sak); 
+Serial.println(mfrc522.PICC_GetTypeName(piccType));
+
+/* Read data from the same block */ 
+Serial.print("\n"); 
+Serial.println("Reading from Data Block..."); 
+ReadDataFromBlock(blockNum, readBlockData);
+
+/* Print the data read from block */
+Serial.print("\n"); 
+Serial.print("Data in Block: ");
+Serial.print(blockNum);
+Serial.print(" --> ");
+//for (int j=0; j<16; j++) {
+int j=0;
+
+char A[j]= {readBlockData[j], 
+            readBlockData[j+1], 
+            readBlockData[j+2],
+            readBlockData[j+3], 
+            readBlockData[j+4], 
+            readBlockData[j+5], 
+            readBlockData[j+6], 
+            readBlockData[j+7], 
+            readBlockData[j+8], 
+            readBlockData[j+9], 
+            readBlockData[j+10], 
+            readBlockData[j+11], 
+            readBlockData[j+12], 
+            readBlockData[j+13], 
+            readBlockData[j+14],
+            readBlockData[j+15]
+            };
+  Serial.println(A);
+serial_gps.available();
+  gps.encode(serial_gps.read());
+if(gps.location.isUpdated()) { 
+  Serial.print("Latitude="); 
+  Serial.print(gps.location.lat(),6); 
+  Serial.print("Longitude="); 
+  Serial.println(gps.location.lng(),6); 
+  delay(2000);
+}
+
+if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 100 || sendDataPrevMillis == 0 )){
+  sendDataPrevMillis - millis();
+
+// Write an Int number on the database path test/int 
+  if (Firebase.RTDB.setString(&fbdo, "test/user/",A)){
+
+    Serial.println("PASSED"); 
+    Serial.println("PATH: " + fbdo.dataPath());
+    Serial.println("TYPE: " + fbdo.dataType());
+}
+
+  else {
+    Serial.println("FAILED");
+    Serial.println("REASON: " + fbdo errorReason()); 
+    Serial.println("PLEASE RE-INSERT THE CARD");
+    }
+}
+Serial.print("\n"); 
+void(*resetFunc) (void) = 0; // declare reset fuction at address 0 
+resetFunc(); //call reset/
+}}
+//ReadDataFromBlock() function
+
+void ReadDataFromBlock(int blockNum, byte readBlockData[]) {
+
+/* Authenticating the desired data block for Read access using Key A */ 
+status = mfxc522,PCD Authenticate(MFRC522::PICC_CMD_MP_AUTH_KEY_A, blockNum, &key, &(mfxc522.uid));
+
+if (status != MFRC522::STATUS_OK) { 
+  Serial.print("Authentication failed for Read: "); 
+    Serial.println("PLEASE RE-INSERT THE CARD"); 
+  Serial.println(mfrc522.GetStatusCodeName(status)); 
+  return;
+  }
+else { 
+Serial.println("Authentication success");
+}
+
+/* Reading data from the Block */
+status = mfxc522.MIFARE Read(blockNum, readBlockData, &bufferLen);
+if (status != MFRC522::STATUS_OK) {
+  Serial.print("Reading failed: "); 
+  Serial.println("PLEASE RE-INSERT THE CARD"); 
+  Serial.println(mfrc522.GetStatusCodeName(status)); 
+  return;
+}
+else { 
+  Serial.println("Block was read successfully");
+}
+}
